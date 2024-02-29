@@ -6,6 +6,7 @@ class dataBTC:
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.url ='https://finance.yahoo.com/quote/BTC-USD/history/'
+        sleep(4)
         self.date = []
         self.temp =[]
         self.result1 = []
@@ -22,6 +23,8 @@ class dataBTC:
             sleep(0.5)
             web = self.driver.page_source
             soup = BeautifulSoup(web,'html.parser')
+            getdate = soup.find('span',class_= 'C($linkColor) Fz(14px)').text
+            check = getdate.split(' - ')[0]
             data1 = soup.find('table',class_ ='W(100%) M(0)')
             datas = data1.find_all('tr')
             for data in datas : 
@@ -38,18 +41,21 @@ class dataBTC:
                     self.result6.append(self.temp[5])
                 self.temp = []       
             self.date = self.date[1:-1]
-            if self.date [-1] == "Feb 27, 2023":
+            if any(date3 == check for date3 in self.date):
                 print('Done')
                 break
     def save_data_to_csv(self):
         df = pd.DataFrame()
         df ['Date'] = self.date  
         df ['Open'] = self.result1   
-        df ['Hight'] = self.result2
+        df ['High'] = self.result2
         df ['Low'] = self.result3
         df ['Close'] = self.result4
         df ['Adj Close'] = self.result5
         df ['Volume'] = self.result6
 
-        df.sort_index(ascending=False)
+        df.sort_index(ascending=False,  inplace=True)
         df.to_csv('BTC.csv',index=False)
+    def exit(self):
+        self.driver.quit()
+    
