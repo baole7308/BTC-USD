@@ -5,7 +5,7 @@ from time import sleep
 class dataBTC:
     def __init__(self):
         self.driver = webdriver.Chrome()
-        self.url ='https://finance.yahoo.com/quote/ETH-USD/history'
+        self.url ='https://finance.yahoo.com/quote/BTC-USD/history'
         sleep(4)
         self.date = []
         self.temp =[]
