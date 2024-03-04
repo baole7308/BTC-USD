@@ -12,6 +12,8 @@ class model:
         self.y = None  
     def preprocess(self):
         self.dataset = self.dataset.replace(',', '', regex=True)
+        self.dataset = self.dataset.replace('-',np.nan)
+        self.dataset.dropna(inplace=True)
         self.z = self.dataset.shape[0]
         self.data = self.dataset[['Open', 'High', 'Low', 'Close', 'Adj Close']].values
         x = np.array([self.data[0:self.z-6,:].T, self.data[1:self.z-5,:].T, self.data[2:self.z-4,:].T

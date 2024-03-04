@@ -5,7 +5,7 @@ from time import sleep
 class dataBTC:
     def __init__(self):
         self.driver = webdriver.Chrome()
-        self.url ='https://finance.yahoo.com/quote/BTC-USD/history/'
+        self.url ='https://finance.yahoo.com/quote/ETH-USD/history'
         sleep(4)
         self.date = []
         self.temp =[]
@@ -55,7 +55,7 @@ class dataBTC:
         df ['Volume'] = self.result6
 
         df.sort_index(ascending=False,  inplace=True)
-        df.to_csv('BTC.csv',index=False)
+        df.to_csv('E:\Python\Bitcoin\ETH.csv',index=False)
     def exit(self):
         self.driver.quit()
     
